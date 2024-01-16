@@ -1,0 +1,60 @@
+graph TD
+
+  style Front-End fill:#86C7F3,stroke:#225F9D,stroke-width:2px;
+  style Backend fill:#FFC72C,stroke:#F79824,stroke-width:2px;
+  style Tooling fill:#8FCB81,stroke:#447D52,stroke-width:2px;
+  style Communication fill:#FF8C94,stroke:#CC4356,stroke-width:2px;
+
+  subgraph Front-End
+    style cypress fill:#B2CCFF,stroke:#225F9D,stroke-width:2px;
+    style vuejs fill:#B2CCFF,stroke:#225F9D,stroke-width:2px;
+    cypress[Cypress] -->|Test E2E|vuejs[VueJS]
+    typescript[TypeScript] --> |Superset|vuejs[VueJS]
+    jest[Jest] --> |Unit Test|vuejs[VueJS]
+    prettier[Prettier] --> |Linter|vuejs[VueJS]
+    eslint[ESLint] --> |Linter|vuejs[VueJS]
+    vuetify[Vuetify] --> |UI Library|vuejs[VueJS]
+  end
+
+  subgraph Backend
+    style Postman fill:#FFECB3,stroke:#F79824,stroke-width:2px;
+    style nestjs fill:#FFECB3,stroke:#F79824,stroke-width:2px;
+    Postman -->|API Test| nestjs[NestJS]
+  end
+
+  subgraph Tooling
+    style clickup fill:#B3E3B5,stroke:#447D52,stroke-width:2px;
+    style githubactions fill:#B3E3B5,stroke:#447D52,stroke-width:2px;
+    style sonarcloud fill:#B3E3B5,stroke:#447D52,stroke-width:2px;
+    clickup[Clickup]
+    githubactions[GitHub Actions]
+    sonarcloud[SonarCloud]
+  end
+
+  subgraph Communication
+    style restapi fill:#FFA4AA,stroke:#CC4356,stroke-width:2px;
+    style solid fill:#FFA4AA,stroke:#CC4356,stroke-width:2px;
+    style kiss fill:#FFA4AA,stroke:#CC4356,stroke-width:2px;
+    restapi[REST API]
+    solid[SOLID Principles]
+    kiss[KISS Principle]
+  end
+
+  vuejs -->|HTTP Requests| restapi
+  restapi -->|Data| nestjs
+  nestjs -->|Data| vuejs
+
+  solid -->|Design Principles| vuejs
+  solid -->|Design Principles| nestjs
+
+  kiss -->|Simplicity| vuejs
+  kiss -->|Simplicity| nestjs
+
+  clickup --> githubactions
+  githubactions --> sonarcloud
+
+  Front-End -->|QA operation| Tooling
+  Tooling -->|QA operation| Front-End
+
+  Backend -->|QA operation| Tooling
+  Tooling -->|QA operation| Backend
